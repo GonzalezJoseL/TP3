@@ -55,5 +55,19 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 	return retorno;
 }
 
+/*
+int parser_ID(FILE* pFile)
+{
+	int retorno=-1;
+	int id;
+	char idAux[1000];
 
-
+	if (pFile != NULL)
+	{
+		fscanf(pFile,"%[^\n]\n",idAux);
+		id=atoi(idAux);
+		retorno=id;
+	}
+    return retorno;
+}
+*/

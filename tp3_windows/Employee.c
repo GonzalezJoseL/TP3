@@ -163,5 +163,3 @@ int employee_sortbyname (void* pEmpleadoA, void* pEmpleadoB)
 	return retorno;
 }
 
-
-

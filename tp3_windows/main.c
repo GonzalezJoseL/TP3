@@ -29,7 +29,6 @@ int main()
     char letra = 'n';
     int flagtxt=0;
     int flagbin=0;
-
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     do{
@@ -69,7 +68,7 @@ int main()
             case 3:
             	if (flagtxt==1 || flagbin==1)
             	{
-            		controller_addEmployee(listaEmpleados);
+            		controller_addEmployee(listaEmpleados,"data.csv");
             	}
             	else
             	{

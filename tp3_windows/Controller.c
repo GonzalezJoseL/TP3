@@ -40,38 +40,6 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
     return retorno;
 }
 
-int controller_addEmployee(LinkedList* pArrayListEmployee)
-{
-	int retorno=-1;
-    int id;
-    char nombre[128];
-    int horas;
-    int sueldo;
-
-
-    if( pArrayListEmployee != NULL)
-    {
-        id=employee_autoId();
-
-        Employee* pEmployee=employee_new();
-
-        utn_getNombre(nombre,"Ingresar nombre",30,4);
-        utn_getInt(&horas,"Ingrese la cantidad de horas trabajadas:\n", 20,4,1,9000);
-        utn_getInt(&sueldo,"Ingrese el sueldo:\n",20,4,1,999999);
-
-        if (
-        employee_setId(pEmployee,id)==0 &&
-        employee_setHorasTrabajadas(pEmployee,horas)==0 &&
-        employee_setNombre(pEmployee,nombre)==0 &&
-        employee_setSueldo(pEmployee,sueldo)==0)
-        {
-        	ll_add(pArrayListEmployee,pEmployee);
-        }
-        retorno=0;
-    }
-
-    return retorno;
-}
 
 int controller_searchId (LinkedList* pArrayListEmployee,int id)
 {
@@ -288,4 +256,92 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     	}
     }
 	return retorno;
+}
+/*
+int controller_ReadlastId (char* path)
+{
+	int retorno=-1;
+	FILE* pFILE;
+
+	if (path != NULL)
+	{
+		pFILE=fopen(path,"r");
+		if (pFILE!=NULL)
+		{
+			retorno=parser_ID(pFILE);
+		}
+	}
+	fclose(pFILE);
+	return retorno;
+}
+*/
+int lastId (LinkedList* pArrayListEmployee)
+{
+	int retorno=-1;
+	int len=ll_len(pArrayListEmployee);
+	Employee* pEmployee;
+
+	pEmployee=ll_get(pArrayListEmployee,len-1);
+
+	if (pEmployee != NULL)
+		{
+			employee_getId(pEmployee,&retorno);
+		}
+	return retorno;
+}
+
+/*
+int controller_WritelastId (char* path,LinkedList* pArrayListEmployee)
+{
+	int retorno=-1;
+	int id;
+	FILE* pFILE;
+
+	if (path != NULL)
+	{
+		pFILE=fopen(path,"w");
+		if (pFILE!=NULL)
+		{
+			id=lastId(pArrayListEmployee);
+			fprintf(pFILE,"%d",id);
+		}
+	}
+	fclose(pFILE);
+	return retorno;
+}
+*/
+
+int controller_addEmployee(LinkedList* pArrayListEmployee)
+{
+	int retorno=-1;
+    int id;
+    char nombre[128];
+    int horas;
+    int sueldo;
+
+
+    if( pArrayListEmployee != NULL)
+    {
+
+    	id=(lastId (pArrayListEmployee)+1);
+        Employee* pEmployee=employee_new();
+
+        utn_getNombre(nombre,"Ingresar nombre",30,4);
+        utn_getInt(&horas,"Ingrese la cantidad de horas trabajadas:\n", 20,4,1,9000);
+        utn_getInt(&sueldo,"Ingrese el sueldo:\n",20,4,1,999999);
+
+        if (
+        employee_setId(pEmployee,id)==0 &&
+        employee_setHorasTrabajadas(pEmployee,horas)==0 &&
+        employee_setNombre(pEmployee,nombre)==0 &&
+        employee_setSueldo(pEmployee,sueldo)==0)
+        {
+        	ll_add(pArrayListEmployee,pEmployee);
+        }
+
+        //controller_WritelastId ("id.txt",pArrayListEmployee);
+        retorno=0;
+    }
+
+    return retorno;
 }
